@@ -52,7 +52,9 @@ public class HttpClientMethod {
             if (httpEntity != null) {
                 // 打印响应内容
                 String retStr = EntityUtils.toString(httpEntity, "UTF-8");
-                logger.info("response:" + retStr);
+                logger.info("==================================================================================");
+                logger.info("==================================================================================");
+                logger.info("response:=========》" + retStr);
             }
             // 释放资源
             httpClient.close();
