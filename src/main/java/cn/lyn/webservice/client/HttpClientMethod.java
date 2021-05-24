@@ -25,6 +25,8 @@ public class HttpClientMethod {
     public static void main(String[] args) {
 
         String  name="aaa";
+
+        //soap 参数
         String s = "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:ws='http://serviceone.webservice.lyn.cn/'>\n" +
                 "    <soapenv:Header/>\n" +
                 "    <soapenv:Body>\n" +
@@ -36,8 +38,11 @@ public class HttpClientMethod {
         String soapXml= s;
 
 
+        //获取http构建器对象
         HttpClientBuilder builder = HttpClientBuilder.create();
         CloseableHttpClient httpClient = builder.build();
+
+        //封装httppost请求对象
         HttpPost httpPost = new HttpPost("http://127.0.0.1:8080/soap/sayHello");
         httpPost.setConfig(RequestConfig.custom().setSocketTimeout(30000).setConnectTimeout(30000).build());
         try {
@@ -45,7 +50,9 @@ public class HttpClientMethod {
             httpPost.setHeader("SOAPAction", "");
             StringEntity data = new StringEntity(soapXml,
                     Charset.forName("UTF-8"));
-            httpPost.setEntity(data);
+            httpPost.setEntity(data);  //设置post请求参数实体
+
+            //执行http请求
             CloseableHttpResponse response = httpClient
                     .execute(httpPost);
             HttpEntity httpEntity = response.getEntity();
