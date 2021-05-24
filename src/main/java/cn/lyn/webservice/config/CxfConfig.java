@@ -1,5 +1,6 @@
 package cn.lyn.webservice.config;
 
+import cn.lyn.webservice.interceptor.CxfInterceptor;
 import cn.lyn.webservice.serviceone.WebServiceInterface;
 import cn.lyn.webservice.serviceone.impl.WebServiceImpl;
 import cn.lyn.webservice.wsdl.WebServiceImplService;
@@ -10,6 +11,7 @@ import org.apache.cxf.transport.servlet.CXFServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.xml.ws.Endpoint;
 
@@ -18,7 +20,7 @@ import javax.xml.ws.Endpoint;
  * @create 2021-05-24 下午2:19
  */
 @Configuration
-public class CxfConfig {
+public class CxfConfig implements WebMvcConfigurer {
 
     /**
      * 此方法被注释后:wsdl访问地址为http://127.0.0.1:8080/services/user?wsdl
@@ -31,10 +33,14 @@ public class CxfConfig {
 
     /**
      * 非必要项
+     * 用于打印cxf日志信息
      */
     @Bean(name = Bus.DEFAULT_BUS_ID)
     public SpringBus springBus() {
-        return new SpringBus();
+        SpringBus springBus = new SpringBus();
+        CxfInterceptor cxfInterceptor = new CxfInterceptor();
+        springBus.getInInterceptors().add(cxfInterceptor);
+        return springBus;
     }
 
     @Bean
@@ -52,4 +58,14 @@ public class CxfConfig {
         endpoint.publish("/sayHello");
         return endpoint;
     }
+
+    @Bean
+    public CxfInterceptor getCxfInterceptor(){
+        return new CxfInterceptor();
+    }
+
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(getCxfInterceptor()).addPathPatterns("/*");
+//    }
 }
