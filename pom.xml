@@ -36,5 +36,23 @@
             <artifactId>cxf-spring-boot-starter-jaxws</artifactId>
             <version>3.4.0</version>
         </dependency>
+
+
+        <!--http客户端依赖-->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>fluent-hc</artifactId>
+            <version>4.3.2</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.httpcomponents</groupId>-->
+<!--            <artifactId>http-core</artifactId>-->
+<!--            <version>4.3.2</version>-->
+<!--        </dependency>-->
     </dependencies>
 </project>
