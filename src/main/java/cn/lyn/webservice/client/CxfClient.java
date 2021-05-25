@@ -3,8 +3,6 @@ package cn.lyn.webservice.client;
 import cn.lyn.webservice.interceptor.CxfInterceptor;
 import cn.lyn.webservice.serviceone.WebServiceInterface;
 import org.apache.cxf.interceptor.Interceptor;
-import org.apache.cxf.interceptor.LoggingInInterceptor;
-import org.apache.cxf.interceptor.LoggingOutInterceptor;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.cxf.message.Message;
 
