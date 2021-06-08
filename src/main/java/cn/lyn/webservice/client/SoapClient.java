@@ -22,8 +22,8 @@ public class SoapClient {
     String wsdlUrl = ""; //wsdl文档地址
     String serviceName = ""; //服务的名字
     String portName = "";
-    String responseName = "";
-    String elementName = "";
+    String responseName = ""; //@WebResult：注解上的name值
+    String elementName = ""; //默认是要访问的方法名 如果@WebMethod属性name有值 则是该值，实际还是以wsdl文档为主
     int timeout = 20000;
 
     /**
@@ -97,10 +97,11 @@ public class SoapClient {
         // 创建SOAPMessage
         try {
             SOAPMessage msg = MessageFactory.newInstance(
-                    SOAPConstants.SOAP_1_2_PROTOCOL).createMessage();
+                    SOAPConstants.SOAP_1_1_PROTOCOL).createMessage();
             msg.setProperty(SOAPMessage.CHARACTER_SET_ENCODING, "UTF-8");
 
             SOAPEnvelope envelope = msg.getSOAPPart().getEnvelope();
+
 
             // 创建SOAPHeader(不是必需)
             // SOAPHeader header = envelope.getHeader();
@@ -140,4 +141,15 @@ public class SoapClient {
         }
     }
 
+    public static void main(String[] args) throws Exception {
+        SoapClient soapClient=new SoapClient("http://serviceone.webservice.lyn.cn/","http://127.0.0" +
+                ".1:8080/soap/sayHello?wsdl","WebServiceInterfaceService","WebServiceInterfacePort","sayHello",
+                "sayHelloResponse",
+                2000);
+        //封装请求参数
+        HashMap<String,String> msg=new HashMap<>();
+        msg.put("name","啊哈");
+        String s = soapClient.sendMessage(msg);
+        System.out.println(s);
+    }
 }
